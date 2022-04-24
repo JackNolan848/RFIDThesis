@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Website.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <title>Attendance Records</title>
+</head>
+<script>
+    const SUPABASE_URL = 'https://oqhxckhmaitpddwstpdz.supabase.co'
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xaHhja2htYWl0cGRkd3N0cGR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDc0MzMzNTUsImV4cCI6MTk2MzAwOTM1NX0.cNoDeVu3j1Yh9WQPLpWH9scAzWz9BKuj6yf5pT5wkP4'
+
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function loadData() {
+        const { data, error } = await _supabase
+                .from('StudentData')
+                .select("*")
+
+        console.log(data);
+        console.log(error);
+
+        if(!error) {
+            //loop display data here
+            const parent = document.getElementById('Section2');
+
+            let contents = ''
+            data.forEach(function(item){
+                contents += `<p> ${item.firstName} - ${item.lastName} - ${item.age} - ${item.studentnum} - ${item.Timestamp} - ${item.inout} <p>` 
+            });
+            
+
+            parent.insertAdjacentHTML('beforeend', contents);
+        }
+    }
+loadData();
+ const $ = (selector) => document.querySelector(selector);  
+
+ window.addEventListener('load', () => {
+    //Get button
+    $("#ser").addEventListener("click", () => {
+        const studentNumber = $("#Studentnum").value;
+        
+        loadSingleStudent(studentNumber);
+        
+    });
+
+    async function loadSingleStudent(number){
+        const { data, error } = await _supabase
+                .from('StudentData')
+                .select("*").eq('studentnum', "A00266709 ");
+
+        console.log(data);
+        console.log(error);
+
+        if(!error) {
+            //loop display data here
+            const parent = document.getElementById('Section2');
+            parent.innerHTML = "";
+
+            let contents = ''
+            data.forEach(function(item){
+                contents += `<p> ${item.firstName} - ${item.lastName} - ${item.age} - ${item.studentnum} - ${item.Timestamp} - ${item.inout} <p>` 
+            });
+            
+
+            parent.insertAdjacentHTML('beforeend', contents);
+        }
+    }
+ });
+
+</script>
+<body>
+    <div id="holder"></div>
+
+    <div id="Section1">
+        <h1>
+            <p>Please Enter a Student Number:</p>
+            <button id="ser">Search</button>
+            <button id="cle">Clear</button>
+            <textarea name="Student Number" id="Studentnum" cols="30" rows="2">
+            </textarea>
+        </h1>
+    </div>
+    <div id="Section2">
+    </div>
+    
+</body>
+</html>

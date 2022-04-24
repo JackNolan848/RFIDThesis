@@ -1,0 +1,30 @@
+CREATE DATABASE IF NOT EXISTS StudentDatabase;
+USE StudentDatabase;
+
+DROP TABLE IF EXISTS STUDENT;
+
+
+CREATE TABLE STUDENT (
+	uidn INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
+	firstName VARCHAR(20) NOT NULL,
+	lastName VARCHAR(20) NOT NULL,
+	age INTEGER NOT NULL,
+	gender VARCHAR(10) NOT NULL,
+	Campus VARCHAR(15) NOT NULL,
+	time Time NOT NULL,
+	studentnum VARCHAR(20) NOT NULL,
+	inorout VARCHAR(20) NOT NULL);
+
+SELECT 'INSERTING DATA INTO DATABASE' as 'INFO';
+
+INSERT INTO STUDENT VALUES ( null, 'John', 'Moor', 45, 'Male', 'Athlone', '00:00:00', 'A00266709', 'out');
+INSERT INTO STUDENT VALUES ( null, 'Kyle', 'Wright', 18, 'Male', 'Limerick', '00:00:00', 'A00247832', 'out');
+INSERT INTO STUDENT VALUES ( null, 'Annie', 'Bauer', 18, 'Female', 'Limerick', '00:00:00', 'A00245136', 'out');
+
+select * from STUDENT;
+
+
+
+
+
+UPDATE STUDENT SET time = '12:12:12', inorout = 'in' where studentnum = 'A00266709';
